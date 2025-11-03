@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -8,24 +9,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- ▼▼▼ ブラウザでJSXを翻訳するためにBabelを追加 ▼▼▼ -->
+    
+    <!-- 1. Babel for in-browser transpilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- ▼▼▼ Reactの読み込み設定を、より安定したCDNに変更します ▼▼▼ -->
+    <!-- 2. Import Map for module resolution (Corrected) -->
     <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
-  }
-}
-</script>
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "react/": "https://esm.sh/react@18.2.0/",
+        "react-dom/": "https://esm.sh/react-dom@18.2.0/"
+      }
+    }
+    </script>
   </head>
   <body class="bg-slate-50">
     <div id="root"></div>
-    <!-- ▼▼▼ BabelがTypeScript(.tsx)ファイルを処理するように設定 ▼▼▼ -->
+    
+    <!-- 3. Main application script -->
     <script type="text/babel" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
