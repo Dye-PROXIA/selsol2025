@@ -3,14 +3,6 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import InvoiceForm from './components/InvoiceForm.js';
 import InvoicePreview from './components/InvoicePreview.js';
 
-// グローバル変数の型定義
-declare global {
-  interface Window {
-    html2canvas: any;
-    jspdf: any;
-  }
-}
-
 const getInitialDate = (offsetDays = 0) => {
   const date = new Date();
   date.setDate(date.getDate() + offsetDays);
@@ -318,4 +310,3 @@ const App = () => {
 };
 
 export default App;
-
