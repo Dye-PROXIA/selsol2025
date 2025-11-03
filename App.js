@@ -12,18 +12,12 @@ const getInitialDate = (offsetDays = 0) => {
 // ==================================================================
 // ★★★ 会社情報とロゴの設定 ★★★
 // ==================================================================
-// 請求書に表示される会社情報です。必要に応じて内容を書き換えてください。
-//
-// ロゴ画像を表示するには:
-// 1. Imgurなどの画像ホスティングサービスにロゴをアップロードします。
-// 2. アップロードした画像の上で「右クリック」し、「画像アドレスをコピー」を選択します。
-// 3. コピーしたURL（末尾が .png や .jpg になるもの）を下の `logoUrl` に貼り付けてください。
 const COMPANY_INFO = {
   name: '日本プロジェクトソリューションズ株式会社',
   address: '〒103-0006 東京都中央区日本橋富沢町6番4号 3階 PROXIA GROUP',
   email: 'yourcompany@example.com',
   phone: '03-1234-5678',
-  logoUrl: 'https://i.imgur.com/SzxEHWJ.png', // ← ここにあなたのロゴ画像のURLを貼り付け
+  logoUrl: 'https://i.imgur.com/SzxEHWJ.png',
   notes: 'お振込み手数料は貴社にてご負担ください。',
   taxRate: 10,
 };
@@ -42,16 +36,12 @@ const App = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   
   // ★★★ GoogleスプレッドシートのURL設定 ★★★
-  // 1. Googleスプレッドシートで、[ファイル] > [共有] > [ウェブに公開] を選択します。
-  // 2. [ドキュメント全体] を対象のシートに変更し、公開形式を [カンマ区切り形式（.csv）] に設定します。
-  // 3. [公開] をクリックし、表示されたURLを下の SPREADSHEET_URL に貼り付けてください。
-  // ※1行目はヘッダー行として扱われます。列の順序は A列:name, B列:price, C列:description(省略可) としてください。
-  const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAbd-F25CEOrUJ-LUJB6ajU9dq89EZk_yZGLqFsSU6CPtppm7AkEU1tO4FhZZZxYDcMmjRcU78SIxe/pub?gid=0&single=true&output=csv'; // ← ここに公開URLを貼り付け
+  const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAbd-F25CEOrUJ-LUJB6ajU9dq89EZk_yZGLqFsSU6CPtppm7AkEU1tO4FhZZZxYDcMmjRcU78SIxe/pub?gid=0&single=true&output=csv';
 
   useEffect(() => {
     const fetchProducts = async () => {
       if (!SPREADSHEET_URL) {
-        setError("GoogleスプレッドシートのURLが設定されていません。App.tsx内のSPREADSHEET_URLを更新してください。");
+        setError("GoogleスプレッドシートのURLが設定されていません。App.js内のSPREADSHEET_URLを更新してください。");
         setLoading(false);
         return;
       }
@@ -62,9 +52,8 @@ const App = () => {
           throw new Error('スプレッドシートのデータの取得に失敗しました。公開設定などを確認してください。');
         }
         const csvText = await response.text();
-        const rows = csvText.split(/\r?\n/).slice(1); // ヘッダー行をスキップ
+        const rows = csvText.split(/\r?\n/).slice(1);
         
-        // ダブルクォートで囲まれたフィールド内のカンマや、エスケープされたダブルクォートを考慮するCSVパーサー
         const parseCsvRow = (row) => {
             const columns = [];
             let currentField = '';
@@ -73,44 +62,37 @@ const App = () => {
             for (let i = 0; i < row.length; i++) {
                 const char = row[i];
                 if (char === '"') {
-                    // 連続するダブルクォート "" はエスケープされたものとみなし、一つの " に変換する
                     if (inQuotes && i + 1 < row.length && row[i + 1] === '"') {
                         currentField += '"';
-                        i++; // 次の " をスキップ
+                        i++;
                     } else {
-                        // エスケープされていない " は引用符の開始/終了
                         inQuotes = !inQuotes;
                     }
                 } else if (char === ',' && !inQuotes) {
-                    // フィールドの区切り
                     columns.push(currentField);
                     currentField = '';
                 } else {
-                    // 通常の文字
                     currentField += char;
                 }
             }
-            // 最後のフィールドを追加
             columns.push(currentField);
             return columns;
         };
 
         const parsedProducts = rows
           .map((row, index) => {
-            if (!row.trim()) return null; // 空行をスキップ
+            if (!row.trim()) return null;
 
             const columns = parseCsvRow(row);
             
-            // A列(name), B列(price), C列(description) を想定
             if (columns.length < 2) return null;
 
             const name = columns[0].trim();
             const priceStr = columns[1].trim();
-            const description = (columns[2] || '').trim() || name; // C列があればdescription、なければnameを使う
+            const description = (columns[2] || '').trim() || name;
 
             if (!name || !priceStr) return null;
 
-            // 価格からカンマや通貨記号などの非数値文字を除去して数値に変換
             const price = parseFloat(priceStr.replace(/[^0-9.]/g, ''));
             if (isNaN(price)) return null;
 
