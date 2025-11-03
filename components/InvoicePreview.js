@@ -92,11 +92,6 @@ const InvoicePreview = ({ invoice, companyInfo, subtotal, taxAmount, total }) =>
 
        <style>{`
         @media print {
-          /* 
-            印刷時のスタイル調整
-            App.tsx側で \`print:hidden\` クラスによって不要なコンポーネント（ヘッダーやフォーム）は非表示になります。
-            ここでは、請求書プレビュー自体が印刷ページ全体にきれいに収まるようにスタイルを調整します。
-          */
           body {
             background-color: white;
           }
