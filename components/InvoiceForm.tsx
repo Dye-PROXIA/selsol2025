@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
-import { Product, LineItem } from '../types';
-import { PlusIcon, TrashIcon, CartIcon } from './icons';
+import { Product, LineItem } from '../types.ts';
+import { PlusIcon, TrashIcon, CartIcon } from './icons.tsx';
 
 interface InvoiceFormProps {
   products: Product[];
