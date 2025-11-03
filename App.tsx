@@ -1,7 +1,8 @@
+
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Invoice, LineItem, Product } from './types';
-import InvoiceForm from './components/InvoiceForm';
-import InvoicePreview from './components/InvoicePreview';
+import { Invoice, LineItem, Product } from './types.ts';
+import InvoiceForm from './components/InvoiceForm.tsx';
+import InvoicePreview from './components/InvoicePreview.tsx';
 
 // グローバル変数の型定義
 declare global {
