@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Invoice } from '../types';
+import { Invoice } from '../types.ts';
 
 interface InvoicePreviewProps {
   invoice: Invoice;
