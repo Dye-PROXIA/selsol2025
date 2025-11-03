@@ -43,7 +43,6 @@ const InvoiceForm = ({
   const [selectedProductId, setSelectedProductId] = useState('');
 
   useEffect(() => {
-    // 商品リストが読み込まれたら、プルダウンの初期値を設定
     if (products.length > 0 && !selectedProductId) {
       setSelectedProductId(products[0].id);
     }
@@ -83,14 +82,14 @@ const InvoiceForm = ({
             </button>
           </div>
         )}
-        {!loading && !error && products.length === 0 && !error && (
+        {!loading && !error && products.length === 0 && (
             <p className="text-gray-500">商品が見つかりませんでした。スプレッドシートの内容を確認してください。</p>
         )}
       </Section>
 
       {cart.length > 0 && (
         <Section title="カート" icon={<CartIcon />}>
-          {cart.map((item, index) => (
+          {cart.map((item) => (
               <div key={item.id} className="p-3 border border-gray-200 rounded-lg space-y-2 relative">
                   <p className="font-semibold text-gray-700">{item.description}</p>
                   <div className="grid grid-cols-5 gap-3 items-center">
