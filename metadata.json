@@ -1,0 +1,5 @@
+{
+  "name": "SELSOL 2025",
+  "description": "A web application that allows customers to select products, enter their information, and instantly generate their own professional invoice for printing or saving.",
+  "requestFramePermissions": []
+}
