@@ -8,7 +8,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script type="importmap">
+    <!-- ▼▼▼ ブラウザでJSXを翻訳するためにBabelを追加 ▼▼▼ -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="importmap">
 {
   "imports": {
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
@@ -20,6 +22,7 @@
 </head>
   <body class="bg-slate-50">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <!-- ▼▼▼ typeを"module"から"text/babel"に変更し、data-type="module"を追加 ▼▼▼ -->
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
